@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestavracijaLib
+namespace RestavracijaLib //Faza 2 – dodan vmesnik ICenik
+
 {
     public interface ICenik // VMESNIK: določa, da mora razred znati izračunati končno ceno
     {
