@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>RestavracijaLib</name>
+  </assembly>
+  <members>
+
+    <!-- ==================== Izdelek ==================== -->
+    <member name="T:RestavracijaLib.Izdelek">
+      <summary>
+        Abstraktni osnovni razred za vse meniške postavke v restavraciji.
+        Definira skupne lastnosti <c>Naziv</c> in <c>Cena</c> ter abstraktno
+        metodo <c>Opis()</c>, ki jo morajo implementirati vsi podrazredi.
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.Izdelek.Naziv">
+      <summary>Ime izdelka (npr. "Pica Klasika").</summary>
+    </member>
+    <member name="P:RestavracijaLib.Izdelek.Cena">
+      <summary>Cena izdelka v evrih brez DDV.</summary>
+    </member>
+    <member name="M:RestavracijaLib.Izdelek.#ctor(System.String,System.Decimal)">
+      <summary>
+        Inicializira nov primerek razreda <c>Izdelek</c>.
+      </summary>
+      <param name="naziv">Ime izdelka.</param>
+      <param name="cena">Cena izdelka v evrih.</param>
+    </member>
+    <member name="M:RestavracijaLib.Izdelek.Opis">
+      <summary>
+        Abstraktna metoda, ki vrne besedilni opis izdelka.
+        Vsak podrazred (<c>Hrana</c>, <c>Pijaca</c>) jo implementira drugače
+        – to je polimorfizem.
+      </summary>
+      <returns>Niz z opisom izdelka, vključno z vrsto in ceno.</returns>
+    </member>
+    <member name="M:RestavracijaLib.Izdelek.ToString">
+      <summary>
+        Vrne niz za prikaz v vmesniku; delegira na metodo <c>Opis()</c>.
+      </summary>
+      <returns>Rezultat klica <c>Opis()</c>.</returns>
+    </member>
+
+    <!-- ==================== Hrana ==================== -->
+    <member name="T:RestavracijaLib.Hrana">
+      <summary>
+        Razred, ki predstavlja jed v meniju restavracije.
+        Deduje od abstraktnega razreda <c>Izdelek</c> in implementira
+        metodo <c>Opis()</c> z oznako vrste "(hrana)".
+      </summary>
+    </member>
+    <member name="M:RestavracijaLib.Hrana.#ctor(System.String,System.Decimal)">
+      <summary>
+        Inicializira nov primerek razreda <c>Hrana</c>.
+      </summary>
+      <param name="naziv">Ime jedi (npr. "Hamburger").</param>
+      <param name="cena">Cena jedi v evrih.</param>
+    </member>
+    <member name="M:RestavracijaLib.Hrana.Opis">
+      <summary>
+        Vrne opis jedi v obliki "Naziv (hrana) - 0.00 €".
+      </summary>
+      <returns>Formatiran niz z nazivom, vrsto in ceno jedi.</returns>
+    </member>
+
+    <!-- ==================== Pijaca ==================== -->
+    <member name="T:RestavracijaLib.Pijaca">
+      <summary>
+        Razred, ki predstavlja pijačo v meniju restavracije.
+        Deduje od abstraktnega razreda <c>Izdelek</c> in doda lastnost
+        <c>Volumen</c> (v litrih). Implementira metodo <c>Opis()</c>
+        z oznako vrste "(pijača)".
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.Pijaca.Volumen">
+      <summary>Prostornina pijače v litrih (npr. 0.5 za 0,5 l).</summary>
+    </member>
+    <member name="M:RestavracijaLib.Pijaca.#ctor(System.String,System.Decimal,System.Double)">
+      <summary>
+        Inicializira nov primerek razreda <c>Pijaca</c>.
+      </summary>
+      <param name="naziv">Ime pijače (npr. "Voda").</param>
+      <param name="cena">Cena pijače v evrih.</param>
+      <param name="volumen">Prostornina pijače v litrih.</param>
+    </member>
+    <member name="M:RestavracijaLib.Pijaca.Opis">
+      <summary>
+        Vrne opis pijače v obliki "Naziv (pijača) - 0.00 €".
+      </summary>
+      <returns>Formatiran niz z nazivom, vrsto in ceno pijače.</returns>
+    </member>
+
+    <!-- ==================== PostavkaNarocila ==================== -->
+    <member name="T:RestavracijaLib.PostavkaNarocila">
+      <summary>
+        Predstavlja posamezno vrstico naročila – kombinacijo izdelka in količine.
+        Vsebuje metodo za izračun skupnega zneska postavke.
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.PostavkaNarocila.Izdelek">
+      <summary>Referenca na naročeni <c>Izdelek</c> (hrana ali pijača).</summary>
+    </member>
+    <member name="P:RestavracijaLib.PostavkaNarocila.Kolicina">
+      <summary>Število kosov naročenega izdelka.</summary>
+    </member>
+    <member name="M:RestavracijaLib.PostavkaNarocila.#ctor(RestavracijaLib.Izdelek,System.Int32)">
+      <summary>
+        Inicializira novo postavko naročila.
+      </summary>
+      <param name="izdelek">Naročeni izdelek.</param>
+      <param name="kolicina">Začetna količina.</param>
+    </member>
+    <member name="M:RestavracijaLib.PostavkaNarocila.Znesek">
+      <summary>
+        Izračuna skupni znesek postavke (cena × količina).
+      </summary>
+      <returns>Znesek postavke v evrih.</returns>
+    </member>
+    <member name="M:RestavracijaLib.PostavkaNarocila.ToString">
+      <summary>
+        Vrne niz za prikaz v vmesniku v obliki "Naziv x Kolicina = 0.00 €".
+      </summary>
+      <returns>Formatiran opis postavke.</returns>
+    </member>
+
+    <!-- ==================== Narocilo ==================== -->
+    <member name="T:RestavracijaLib.Narocilo">
+      <summary>
+        Razred, ki predstavlja naročilo posamezne mize v restavraciji.
+        Vsebuje seznam postavk, samodejno dodeljeno številko naročila
+        (statični števec), čas nastanka (readonly) in konstantno vrednost DDV.
+        Podpira indekser za dostop do postavk po indeksu.
+      </summary>
+    </member>
+    <member name="F:RestavracijaLib.Narocilo.DDV">
+      <summary>
+        Konstanta z vrednostjo davka na dodano vrednost (22 %).
+        Vrednost: <c>0.22m</c>.
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.Narocilo.Ustvarjeno">
+      <summary>
+        Datum in čas nastanka naročila. Vrednost se nastavi ob inicializaciji
+        in je nespremenljiva (<c>readonly</c>).
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.Narocilo.Stevilka">
+      <summary>
+        Edinstvena zaporedna številka naročila, ki se samodejno poveča
+        ob vsakem novem naročilu (statični števec).
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.Narocilo.Postavke">
+      <summary>
+        Seznam vseh postavk (<c>PostavkaNarocila</c>) v naročilu.
+      </summary>
+    </member>
+    <member name="M:RestavracijaLib.Narocilo.#ctor">
+      <summary>
+        Inicializira novo naročilo. Nastavi čas nastanka in dodeli
+        naslednjo zaporedno številko.
+      </summary>
+    </member>
+    <member name="M:RestavracijaLib.Narocilo.DodajIzdelek(RestavracijaLib.Izdelek)">
+      <summary>
+        Doda izdelek v naročilo. Če je izdelek že v naročilu, poveča
+        njegovo količino za 1; sicer ustvari novo postavko.
+      </summary>
+      <param name="izdelek">Izdelek, ki ga želimo dodati v naročilo.</param>
+    </member>
+    <member name="M:RestavracijaLib.Narocilo.Skupaj">
+      <summary>
+        Izračuna skupni znesek vseh postavk naročila brez DDV.
+      </summary>
+      <returns>Skupni znesek v evrih.</returns>
+    </member>
+    <member name="M:RestavracijaLib.Narocilo.ZnesekZDDV">
+      <summary>
+        Izračuna skupni znesek naročila z vključenim DDV (22 %).
+      </summary>
+      <returns>Znesek z DDV v evrih.</returns>
+    </member>
+    <member name="P:RestavracijaLib.Narocilo.Item(System.Int32)">
+      <summary>
+        Indekser za dostop do posamezne postavke naročila po indeksu.
+      </summary>
+      <param name="index">Ničelni indeks postavke v seznamu.</param>
+      <returns>Postavka naročila na danem indeksu.</returns>
+    </member>
+
+    <!-- ==================== Racun ==================== -->
+    <member name="T:RestavracijaLib.RestavracijaLib.Racun">
+      <summary>
+        Razred, ki predstavlja izdan račun. Deduje od razreda <c>Narocilo</c>
+        in implementira vmesnik <c>ICenik</c>. Dodaja lastnosti za številko
+        računa in popust ter metodo za izračun končne cene po popustu.
+      </summary>
+    </member>
+    <member name="P:RestavracijaLib.RestavracijaLib.Racun.StevilkaRacuna">
+      <summary>Edinstvena zaporedna številka izdanega računa.</summary>
+    </member>
+    <member name="P:RestavracijaLib.RestavracijaLib.Racun.Popust">
+      <summary>
+        Vrednost popusta kot decimalno število med 0 in 1
+        (npr. 0.10 za 10-odstotni popust).
+      </summary>
+    </member>
+    <member name="M:RestavracijaLib.RestavracijaLib.Racun.#ctor(System.Decimal)">
+      <summary>
+        Inicializira nov račun z določenim popustom.
+      </summary>
+      <param name="popust">Popust kot decimalno število (0 = brez popusta, 0.3 = 30 %).</param>
+    </member>
+    <member name="M:RestavracijaLib.RestavracijaLib.Racun.KoncnaCena">
+      <summary>
+        Implementacija vmesnika <c>ICenik</c>. Izračuna končno ceno
+        z upoštevanjem DDV in popusta.
+        Formula: <c>ZnesekZDDV() * (1 - Popust)</c>.
+      </summary>
+      <returns>Končna cena za plačilo v evrih.</returns>
+    </member>
+
+    <!-- ==================== ICenik ==================== -->
+    <member name="T:RestavracijaLib.ICenik">
+      <summary>
+        Vmesnik, ki določa pogodbo za razrede, ki znajo izračunati
+        končno ceno. Implementira ga razred <c>Racun</c>.
+      </summary>
+    </member>
+    <member name="M:RestavracijaLib.ICenik.KoncnaCena">
+      <summary>
+        Vrne končno ceno z upoštevanjem vseh popustov in dajatev.
+      </summary>
+      <returns>Končna cena v evrih.</returns>
+    </member>
+
+  </members>
+</doc>
