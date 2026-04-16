@@ -1,4 +1,4 @@
-# RestavracijaGUI 🍕
+# RestavracijaGUI 
  
 Seminarska naloga za predmet OPR – 3. letnik
  
@@ -46,7 +46,7 @@ RestavracijaGUI/
  
 ### Zahteve
  
-- **Visual Studio 2019 ali novejši** (priporočeno Visual Studio 2022)
+- **Visual Studio 2022
 - **.NET Framework 4.7.2** (vgrajeno v Windows 10/11, ni potrebna ločena namestitev)
 - Operacijski sistem: Windows
 ### Koraki
